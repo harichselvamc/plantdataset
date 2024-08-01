@@ -23,7 +23,15 @@ def move_and_push():
             
             # Move each subfolder to the destination
             for subfolder in batch:
-                shutil.move(os.path.join(source_path, subfolder), dest_path)
+                source_subfolder_path = os.path.join(source_path, subfolder)
+                dest_subfolder_path = os.path.join(dest_path, subfolder)
+                
+                # If the subfolder already exists in the destination, remove it
+                if os.path.exists(dest_subfolder_path):
+                    shutil.rmtree(dest_subfolder_path)
+                
+                # Move the subfolder
+                shutil.move(source_subfolder_path, dest_path)
                 print(f"Moved {subfolder} from {source_path} to {dest_path}")
 
             # Git commands
